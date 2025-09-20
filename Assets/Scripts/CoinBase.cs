@@ -20,6 +20,8 @@ public class CoinBase : MonoBehaviour
 
         // If lower than 0, set to 0. If higher than 0.25, set to 0.25. Else, use current mass.
         _rb.mass = (_rb.mass < 0) ? 0 : (_rb.mass > 0.25f) ? 0.25f : _rb.mass;
+
+        _rb.linearVelocity = new Vector3(0, 0, 0);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -30,6 +32,11 @@ public class CoinBase : MonoBehaviour
             _vh.CoinPool.ReturnObject(gameObject);
         }
 
+    }
+
+    private void OnEnable()
+    {
+        _rb.linearVelocity = new Vector3(0, 0, 0);
     }
 
 }

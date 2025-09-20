@@ -28,7 +28,7 @@ public class Pusher : MonoBehaviour
         {
             _moveForward = false;
         }
-        else
+        else if (transform.position.x < _posMin)
         {
             _moveForward = true;
         }

@@ -18,13 +18,23 @@ public class CoinSpawner : MonoBehaviour
         }
     }
 
+    public void ButtonCoinSpawner(int amount = 1)
+    {
+        StartCoroutine(SpawnCoin(amount));
+    }
+
     public IEnumerator SpawnCoin(int amount = 1)
     {
         for (int i = 0; i < amount; i++)
         {
-            GameObject newCoin = _vh.CoinPool.GetObject();
-            newCoin.transform.SetPositionAndRotation(_spawnPosition[Random.Range(0, _spawnPosition.Count)], Random.rotation);
-            yield return new WaitForSeconds(1);
+            if (_vh.Coins > 0)
+            {
+                GameObject newCoin = _vh.CoinPool.GetObject();
+                newCoin.transform.SetPositionAndRotation(_spawnPosition[Random.Range(0, _spawnPosition.Count)], Random.rotation);
+                _vh.Coins -= 1;
+                yield return new WaitForSeconds(1);
+            }
+
         }
 
         yield return null;
