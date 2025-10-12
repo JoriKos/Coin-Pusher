@@ -7,6 +7,7 @@ public class CoinSpawner : MonoBehaviour
     [SerializeField] private ValueHolder _vh;
     [SerializeField] private GameObject _coinPrefab;
     [SerializeField] private List<Vector3> _spawnPosition;
+    [SerializeField] private GameManagement _manager;
 
     private void Awake()
     {
@@ -25,18 +26,29 @@ public class CoinSpawner : MonoBehaviour
 
     public IEnumerator SpawnCoin(int amount = 1)
     {
+        GameObject newCoin = null;
+
         for (int i = 0; i < amount; i++)
         {
             if (_vh.Coins > 0)
             {
-                GameObject newCoin = _vh.CoinPool.GetObject();
+                for (int j = 0; j < _manager.Chance.Count; j++)
+                {
+                    if (Random.value <= (_manager.Chance[j] / 100))
+                    {
+                        //TODO: Change this to be different coin pools instead
+                        newCoin = _vh.CoinPool.GetObject();
+                        newCoin.GetComponent<CoinBase>().Type = (CoinType)j;
+                    }
+                }
+
                 newCoin.transform.SetPositionAndRotation(_spawnPosition[Random.Range(0, _spawnPosition.Count)], Random.rotation);
+
+                newCoin.SetActive(true);
                 _vh.Coins -= 1;
                 yield return new WaitForSeconds(1);
             }
-
         }
-
         yield return null;
     }
 }

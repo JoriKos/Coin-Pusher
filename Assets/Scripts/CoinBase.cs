@@ -4,7 +4,11 @@ public class CoinBase : MonoBehaviour
 {
     [SerializeField] private ValueHolder _vh;
     [SerializeField] private float _value, _weightMultiplier;
+    [SerializeField] private GameManagement _manager;
+    [SerializeField] private CoinType _type; //Set in  prefab
     public float WeightMultiplier { get { return _weightMultiplier; } set { _weightMultiplier = value; } }
+
+    public CoinType Type { get { return _type; } set { _type = value; } }
 
     private Rigidbody _rb;
 
@@ -28,10 +32,9 @@ public class CoinBase : MonoBehaviour
     {
         if (other.name == "CoinReceiver")
         {
-            _vh.Coins += _value * _vh.ValueMultiplier;
+            _vh.Coins += _value * _manager.ValueMultiplier;
             _vh.CoinPool.ReturnObject(gameObject);
         }
-
     }
 
     private void OnEnable()
