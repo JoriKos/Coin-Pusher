@@ -5,9 +5,10 @@ using UnityEngine;
 
 public class ValueHolder : MonoBehaviour
 {
-    [SerializeField] private float _coins;
+    [SerializeField] private float _coins, _premiumCoins;
     [SerializeField] private List<ObjectPooling> _coinPool;
     public float Coins { get { return _coins; } set { _coins = value; } }
+    public float PremiumCoins { get { return _premiumCoins; } set { _premiumCoins = value; } }
     public List<ObjectPooling> CoinPool { get { return _coinPool; } }
 
     private void Awake()

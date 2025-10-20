@@ -34,6 +34,12 @@ public class CoinBase : MonoBehaviour
         //We add value here
         if (other.name == "CoinReceiver")
         {
+            if (_type == CoinType.Premium)
+            {
+                _vh.PremiumCoins += 1;
+                return;
+            }
+
             int index = (int)_type;
             float valueToAdd;
 
@@ -41,7 +47,10 @@ public class CoinBase : MonoBehaviour
 
             valueToAdd = Mathf.Round(valueToAdd);
 
+            // Premium coins are always +1
             _vh.Coins += valueToAdd;
+
+
             _vh.CoinPool[index].ReturnObject(gameObject);
         }
     }

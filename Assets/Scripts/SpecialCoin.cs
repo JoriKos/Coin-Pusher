@@ -2,10 +2,10 @@ using UnityEngine;
 
 public enum CoinType
 {
-    Standard,
-    Large,
-    Premium,
-    Double
+    Standard, //Nothing special
+    Large, //Larger size, pushes coins more
+    Premium, //Adds to premium coins
+    Double //Doubles the value
 }
 
 public class SpecialCoin : MonoBehaviour
