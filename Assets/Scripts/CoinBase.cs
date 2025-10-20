@@ -5,7 +5,7 @@ public class CoinBase : MonoBehaviour
     [SerializeField] private ValueHolder _vh;
     [SerializeField] private float _value, _weightMultiplier;
     [SerializeField] private GameManagement _manager;
-    [SerializeField] private CoinType _type; //Set in  prefab
+    [SerializeField] private CoinType _type; //Set in prefab
     public float WeightMultiplier { get { return _weightMultiplier; } set { _weightMultiplier = value; } }
 
     public CoinType Type { get { return _type; } set { _type = value; } }
@@ -16,6 +16,7 @@ public class CoinBase : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody>();
         _vh = GameObject.Find("GameManager").GetComponent<ValueHolder>();
+        _manager = GameObject.Find("GameManager").GetComponent<GameManagement>();
 
         if (_weightMultiplier == 0)
             _weightMultiplier = 1;
@@ -30,10 +31,18 @@ public class CoinBase : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        //We add value here
         if (other.name == "CoinReceiver")
         {
-            _vh.Coins += _value * _manager.ValueMultiplier;
-            _vh.CoinPool.ReturnObject(gameObject);
+            int index = (int)_type;
+            float valueToAdd;
+
+            valueToAdd = (_type == CoinType.Double) ? (_value * _manager.ValueMultiplier) * 2 : _value * _manager.ValueMultiplier;
+
+            valueToAdd = Mathf.Round(valueToAdd);
+
+            _vh.Coins += valueToAdd;
+            _vh.CoinPool[index].ReturnObject(gameObject);
         }
     }
 

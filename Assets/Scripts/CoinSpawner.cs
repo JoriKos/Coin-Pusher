@@ -36,9 +36,11 @@ public class CoinSpawner : MonoBehaviour
                 {
                     if (Random.value <= (_manager.Chance[j] / 100))
                     {
-                        //TODO: Change this to be different coin pools instead
-                        newCoin = _vh.CoinPool.GetObject();
+                        newCoin = _vh.CoinPool[j].GetObject();
                         newCoin.GetComponent<CoinBase>().Type = (CoinType)j;
+                        
+                        //Break out of for loop
+                        j = _manager.Chance.Count + 9999;
                     }
                 }
 

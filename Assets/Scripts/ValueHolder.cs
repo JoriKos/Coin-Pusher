@@ -1,15 +1,22 @@
-using Unity.VisualScripting;
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ValueHolder : MonoBehaviour
 {
     [SerializeField] private float _coins;
-    [SerializeField] private ObjectPooling _coinPool;
+    [SerializeField] private List<ObjectPooling> _coinPool;
     public float Coins { get { return _coins; } set { _coins = value; } }
-    public ObjectPooling CoinPool { get { return _coinPool; } }
+    public List<ObjectPooling> CoinPool { get { return _coinPool; } }
 
     private void Awake()
     {
-        _coinPool = GameObject.Find("CoinPool").GetComponent<ObjectPooling>();
+        string[] coinTypeNames = Enum.GetNames(typeof(CoinType));
+
+        for (int i = 0; i < coinTypeNames.Length; i++)
+        {
+            _coinPool.Add(GameObject.Find("Pool_" + coinTypeNames[i]).GetComponent<ObjectPooling>());
+        }
     }
 }
